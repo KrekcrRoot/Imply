@@ -6,10 +6,12 @@
 #include <fstream>
 #include <regex>
 
-std::string Imply::encrypt(std::string line)
+using namespace std;
+
+string Imply::encrypt(string line)
 {
     int key = (int) line[0];
-    std::string result = std::to_string(key) + "@";
+    string result = to_string(key) + "@";
 
     for(auto letter : line)
     {
@@ -19,20 +21,20 @@ std::string Imply::encrypt(std::string line)
         if(separator <= 33) separator += 33;
         if(separator >= 48 && separator <= 57) separator += 10;
 
-        result += std::to_string(code);
+        result += to_string(code);
         result += (char) separator;
     }
 
     return result;
 }
 
-std::vector<std::string> Imply::split(std::string line, const std::string &delimiter)
+vector<string> Imply::split(string line, const string &delimiter)
 {
-    std::vector <std::string> vec{};
-    std::string token{};
+    vector <string> vec{};
+    string token{};
     size_t pos;
 
-    while((pos = line.find(delimiter)) != std::string::npos)
+    while((pos = line.find(delimiter)) != string::npos)
     {
         token = line.substr(0, pos);
         line.erase(0, pos + delimiter.length());
@@ -44,19 +46,19 @@ std::vector<std::string> Imply::split(std::string line, const std::string &delim
     return vec;
 }
 
-std::string Imply::decrypt(std::string line)
+string Imply::decrypt(string line)
 {
-    int key = std::stoi(split(line, "@")[0]);
+    int key = stoi(split(line, "@")[0]);
     line.erase(0, line.find('@') + 1);
 
-    std::smatch smatched;
-    std::regex reg {"-?\\d+"};
+    smatch smatched;
+    regex reg {"-?\\d+"};
     bool founded{};
-    std::string result{};
+    string result{};
 
-    while((founded = std::regex_search(line, smatched, reg)))
+    while((founded = regex_search(line, smatched, reg)))
     {
-        int letterCode = (std::stoi(smatched.str()) + key);
+        int letterCode = (stoi(smatched.str()) + key);
         result += (char) letterCode;
         line = smatched.suffix().str();
     }

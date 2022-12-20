@@ -8,11 +8,13 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 namespace Imply
 {
-    std::string encrypt(std::string line);
-    std::vector<std::string> split(std::string line, const std::string& delimiter);
-    std::string decrypt(std::string line);
+    string encrypt(string line);
+    vector<string> split(string line, const string& delimiter);
+    string decrypt(string line);
 }
 
 #endif //IMPLY_IMPLY_H
